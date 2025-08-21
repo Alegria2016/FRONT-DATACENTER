@@ -1,6 +1,9 @@
-# APPANGULAR
+# APP ANGULAR
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
+Aplicacíon desarrollada en Angular version 19.1.4. permite crear recargas para diferentes operadores de Telefonía.
+Acontinuacion se muestra la interfaz grafica de usuarios. <img width="1349" height="670" alt="image" src="https://github.com/user-attachments/assets/42f05295-61f2-41f4-9a81-dee09ea761f2" />
+
+
 
 ## Development server
 
