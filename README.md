@@ -5,7 +5,7 @@ Acontinuacion se muestra la interfaz grafica de usuarios. <img width="1349" heig
 
 
 
-## INICIAR SERRVICIO EN AMBIENTE DE DESARROLLO.
+## INICIAR SERVICIO EN AMBIENTE DE DESARROLLO.
 
 Clonar repositorio y para iniciar el proyecto ejecutar el siguinete comandos en la consola:
 
