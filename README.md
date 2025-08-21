@@ -7,7 +7,7 @@ Acontinuacion se muestra la interfaz grafica de usuarios. <img width="1349" heig
 
 ## INICIAR SERVICIO EN AMBIENTE DE DESARROLLO.
 
-Clonar repositorio y para iniciar el proyecto ejecutar el siguinete comandos en la consola:
+Clonar repositorio y para iniciar el proyecto ejecutar el siguiente comando en la consola:
 
 ```bash
 ng serve
