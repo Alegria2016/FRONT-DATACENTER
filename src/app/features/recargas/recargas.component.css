@@ -1,0 +1,62 @@
+/* recargas.component.css */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.input-field:focus {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+.operator-logo {
+    transition: all 0.3s ease;
+}
+
+.operator-logo:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.btn-recargar {
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+}
+
+.btn-recargar:hover:not(:disabled) {
+    background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+}
+
+.btn-recargar:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.loading-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #6366F1;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

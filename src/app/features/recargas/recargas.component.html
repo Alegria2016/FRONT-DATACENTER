@@ -1,0 +1,151 @@
+<!-- recargas.component.html -->
+<br>
+<div class="max-w-2xl w-full mx-auto">
+    <!-- Tarjeta principal -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden card">
+        <!-- Encabezado con gradiente -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white text-center">
+            <h1 class="text-2xl font-bold"><i class="fas fa-mobile-alt mr-2"></i>Realizar Recarga</h1>
+            <p class="mt-2 opacity-90">Recarga fácil y rápido desde cualquier lugar</p>
+        </div>
+        
+        <!-- Formulario -->
+        <div class="p-8">
+            <form [formGroup]="recargaForm" (ngSubmit)="realizarRecarga()" class="space-y-6">
+                <!-- Campo Operador -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-sim-card text-indigo-500 mr-2"></i>Operador:
+                    </label>
+                    <div class="relative">
+                        <select 
+                            class="w-full p-4 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-field appearance-none"
+                            [class.border-red-500]="recargaForm.get('operadorId')?.invalid && recargaForm.get('operadorId')?.touched"
+                            [class.border-gray-300]="!recargaForm.get('operadorId')?.invalid || !recargaForm.get('operadorId')?.touched"
+                            formControlName="operadorId"
+                            required>
+                            <option value="" disabled selected>Seleccione un operador</option>
+                            <option *ngFor="let operador of operadores" [value]="operador.id">
+                                {{ operador.nombre }}
+                            </option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div *ngIf="recargaForm.get('operadorId')?.invalid && recargaForm.get('operadorId')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                        Por favor selecciona un operador
+                    </div>
+                </div>
+                
+                <!-- Campo Número de teléfono -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-phone text-indigo-500 mr-2"></i>Número de teléfono:
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="tel" 
+                            placeholder="3001234567" 
+                            class="w-full p-4 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-field pl-12"
+                            [class.border-red-500]="recargaForm.get('numeroTelefono')?.invalid && recargaForm.get('numeroTelefono')?.touched"
+                            [class.border-gray-300]="!recargaForm.get('numeroTelefono')?.invalid || !recargaForm.get('numeroTelefono')?.touched"
+                            formControlName="numeroTelefono"
+                            required>
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-500">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                    </div>
+                    <div *ngIf="recargaForm.get('numeroTelefono')?.invalid && recargaForm.get('numeroTelefono')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                        <div *ngIf="recargaForm.get('numeroTelefono')?.errors?.['required']">
+                            El número de teléfono es requerido
+                        </div>
+                        <div *ngIf="recargaForm.get('numeroTelefono')?.errors?.['pattern']">
+                            Ingresa un número de teléfono válido (10 dígitos)
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Campo Valor -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-dollar-sign text-indigo-500 mr-2"></i>Valor:
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-500">
+                            <i class="fas fa-dollar-sign"></i>
+                        </span>
+                        <input 
+                            type="number" 
+                            placeholder="20000" 
+                            class="w-full p-4 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-field pl-12"
+                            [class.border-red-500]="recargaForm.get('valor')?.invalid && recargaForm.get('valor')?.touched"
+                            [class.border-gray-300]="!recargaForm.get('valor')?.invalid || !recargaForm.get('valor')?.touched"
+                            formControlName="valor"
+                            min="1000"
+                            required>
+                    </div>
+                    <div *ngIf="recargaForm.get('valor')?.invalid && recargaForm.get('valor')?.touched" 
+                         class="text-red-500 text-sm mt-1">
+                        <div *ngIf="recargaForm.get('valor')?.errors?.['required']">
+                            El valor es requerido
+                        </div>
+                        <div *ngIf="recargaForm.get('valor')?.errors?.['min']">
+                            El valor mínimo de recarga es $1,000
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Separador -->
+                <div class="relative flex items-center my-8">
+                    <div class="flex-grow border-t border-gray-300"></div>
+                    <span class="flex-shrink mx-4 text-gray-500 text-sm">Confirma tu recarga</span>
+                    <div class="flex-grow border-t border-gray-300"></div>
+                </div>
+                
+                <!-- Estado de carga -->
+                <div *ngIf="cargando" class="text-center py-4">
+                    <div class="loading-spinner"></div>
+                    <p class="mt-2 text-indigo-600">Procesando recarga...</p>
+                </div>
+                
+                <!-- Botón de acción -->
+                <button 
+                    type="submit" 
+                    class="w-full py-4 px-6 rounded-xl text-white font-semibold btn-recargar"
+                    [class.pulse]="recargaForm.valid"
+                    [disabled]="cargando">
+                    <i class="fas fa-bolt mr-2"></i>Realizar Recarga
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!--
+    <div class="mt-10 bg-white rounded-2xl shadow-xl p-6 card">
+        <h2 class="text-xl font-bold text-center text-gray-800 mb-6">
+            <i class="fas fa-wifi text-indigo-500 mr-2"></i>Operadores disponibles
+        </h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+           
+            <div 
+                *ngFor="let operador of operadores" 
+                (click)="seleccionarOperador(+operador.id)"
+                class="rounded-xl p-4 text-center operator-logo cursor-pointer hover:shadow-md"
+                [ngClass]="getOperadorClass(operador.nombre)">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3"
+                    [ngClass]="getOperadorBgClass(operador.nombre)">
+                    <i class="fas fa-sim-card text-2xl" [ngClass]="getOperadorTextClass(operador.nombre)"></i>
+                </div>
+                <span class="font-semibold" [ngClass]="getOperadorTitleClass(operador.nombre)">{{operador.nombre}}</span>
+            </div>
+        </div>
+        
+        <div class="mt-6 text-center text-sm text-gray-500">
+            <p><i class="fas fa-info-circle mr-1"></i>Selecciona un operador para recargar</p>
+        </div>
+    </div> -->
+</div>
